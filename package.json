@@ -1,0 +1,21 @@
+{
+  "name": "fswd-gh-3",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "aakarsh": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aakarsh2207/FSWD-GH-3.git"
+  },
+  "author": "Aakarsh Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aakarsh2207/FSWD-GH-3/issues"
+  },
+  "homepage": "https://github.com/Aakarsh2207/FSWD-GH-3#readme",
+  "description": ""
+}
