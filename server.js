@@ -1,42 +1,53 @@
-const http = require("http"); // package import
+// Importing express
+const express = require("express");
 
-const port = 8081; // PORT Num
+// Initilisation
+const app = express();
 
-const toDoList = ["rohan", "rohit", "anil", "anup"];
+// Application will gonna use only json formmatted data
+app.use(express.json());
 
-http.createServer((request, response)=>{    //Creating a server
-    const {method, url} = request;
-    // console.log(method, url);        //              GET / -actual thing ;                 GET /favicon.ico -Ignore
+// PORT Num
+const port = 8081;
 
-    if(url === "/todos"){
-        if(method === "GET"){
-            response.writeHead(200);
-            response.write(toDoList.toString())
-        }else if (method === "POST"){
-            let body = "";
-            request.on('error',(err)=>{
-                console.log(err);
-            }).on('data',(chunk)=>{     //Chunks of Data
-                body += chunk           //Apending 1 by 1
-                console.log("chunk:", chunk)
-            }).on('end',()=>{       //end on after handling Chunks of Data
-                body = JSON.parse(body)
-                console.log("body: ", body)
-            })
-        }
-        
-        else{
-            response.writeHead(501);
-        }
-    }else if (url === "/"){
-        
-    }
-    // response.writeHead(200, {"Content-Type": "text/html"});     //...200 incates successfull okay - These are different types of HTTPs status codes
-    // response.write("<h1>Hello World! - Aakarsh Sharma   </h1>");
-    response.end();     //It is Optional to write but a Good Practise is to write it here
-})
-.listen(port, ()=>{     //...Always listening to our Port Number
-    console.log(`NodeJs server is up and running succesfully on port ${port}`)
+const toDoList = ["rohan", "rohit", "anil", "anup", "12345"];
+
+// http://localhost:8081/todos
+app.get("/todos", (req, res) => {
+    res.status(200).send(toDoList);
 })
 
-// http://localhost:8081
+app.post("/todos", (req, res)=>{
+    let newToDoItem = req.body.item;
+    toDoList.push(newToDoItem);
+    res.status(201).send({
+        message: "Data added successfully :-)"
+    })
+})
+
+app.delete("/todos", (req, res)=>{
+    const itemToDelete = req.body.item;
+
+    toDoList.find((elem, i) => {
+        if(elem == itemToDelete){
+            toDoList.splice(i, 1);
+        }
+    })
+    res.status(204).send({
+        message: "Deleted Succesfully :-("
+    })
+})
+
+
+app.all("/todos", (req, res)=>{
+    res.status(501).send();
+})
+
+
+app.all("*", (req, res)=>{
+    res.status(404).send();
+})
+
+app.listen(port, ()=>{
+    console.log(`Express Server Application is up and running succesfully on port: ${port}` )
+})

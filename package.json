@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Aakarsh2207/FSWD-GH-3#readme",
   "description": "",
   "dependencies": {
+    "express": "^4.19.2",
     "nodemon": "^3.1.3"
   }
 }
